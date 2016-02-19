@@ -11,28 +11,30 @@ while search:
     cur.execute("select * from offensive_stats_2015 where player_name = (%s);",(player_search,))
     player_search_row = cur.fetchone()
     if player_search_row == None:
-        print("That player was not found")
+        print("\nSorry, That player was not found")
         print("=" * 20)
     else:
-        print("Player Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0])
+        print("\nPlayer Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0])
         print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player_search_row[1])
         print("Jersey number: " + "\t","\t","\t","\t","\t","\t","\t",str(player_search_row[2]))
         print("Total Plays from Scrimmage: " + "\t","\t","\t",str(player_search_row[3]))
         print("Total Yards from Scrimmage: " + "\t","\t","\t",str(player_search_row[4]))
         print("Average Yards per play from Scrimmage: " + "\t",str(player_search_row[5]))
         print("Total TDs from Scrimmage: " + "\t","\t","\t","\t",str(player_search_row[6]))
-
+        print("=" * 20)
+        
     position_check = "y"
     while position_check == "y":
-        position_check = input("Would you like to search by position? (Type 'y' or 'n') ")
+        position_check = input("\nWould you like to search by position? (Type 'y' or 'n') ")
+        print('-' * 20)
+
         if position_check == "y":
-            position_search = input("\nWhich positions would you like to search for? (Type 'qb', 'rb', or 'wr') ")
+            position_search = input("Which positions would you like to search for? (Type 'qb', 'rb', or 'wr') ")
             cur.execute("SELECT * FROM offensive_stats_2015 WHERE player_position = (%s);", (position_search,))
             position_search_row = cur.fetchall()
-            print('\n')
-            print('-' * 20)
+            print('=' * 20)
             print("Data for %s position group:" % (position_search.upper()))
-            print('-' * 20)
+            print('=' * 20)
             for player in position_search_row:
                 print("Player Name: " + "\t","\t","\t","\t","\t","\t","\t",player[0])
                 print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player[1])
@@ -43,8 +45,8 @@ while search:
                 print("Total TDs from Scrimmage: " + "\t","\t","\t","\t",str(player[6]))
                 print("-" * 20)
         else:
-            print("")
             continue
+
     insert_player = "y"
     while insert_player == "y":
         insert_player = input("Would you like to insert new player data? (Type 'y' or 'n')")
@@ -71,6 +73,7 @@ while search:
     keep_going = input("Would you like to search again? (Type 'y' or 'n')" )
     if keep_going == "y":
         continue
+
     else:
         break
 
