@@ -2,7 +2,7 @@
 
 # create a table.
 
-# load in data
+# insert data using the cursor.execute method
 
 import psycopg2
 
