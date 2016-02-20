@@ -50,7 +50,7 @@ def read_file():
        data = infile.readlines()
    return [line.replace('\n','').split(",") for line in data]
 roster = read_file()
-print(roster)
+#print(roster)
 
 for player in roster:
     cur.execute(insert_template, player)

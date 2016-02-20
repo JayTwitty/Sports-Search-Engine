@@ -4,7 +4,7 @@ import psycopg2
 conn = psycopg2.connect(user="tiger_twitty", database="clemson_google")
 cur = conn.cursor()
 
-print("\nThis is the Clemson Google database for 2015 Offensive Football Stats.\n")
+print("\nWelcome to the Clemson Google database for 2015 Offensive Football Stats.\n")
 search = True
 while search:
     player_search = input("Which offensive player would you like to search for? ")
@@ -14,15 +14,14 @@ while search:
         print("\nSorry, That player was not found")
         print("=" * 20)
     else:
-        print("\nPlayer Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0])
-        print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player_search_row[1])
+        print("\nPlayer Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0].upper())
+        print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player_search_row[1].upper())
         print("Jersey number: " + "\t","\t","\t","\t","\t","\t","\t",str(player_search_row[2]))
         print("Total Plays from Scrimmage: " + "\t","\t","\t",str(player_search_row[3]))
         print("Total Yards from Scrimmage: " + "\t","\t","\t",str(player_search_row[4]))
         print("Average Yards per play from Scrimmage: " + "\t",str(player_search_row[5]))
         print("Total TDs from Scrimmage: " + "\t","\t","\t","\t",str(player_search_row[6]))
         print("=" * 20)
-
     position_check = "y"
     while position_check == "y":
         position_check = input("\nWould you like to search by position? (Type 'y' or 'n') ")
@@ -34,11 +33,11 @@ while search:
                 cur.execute("SELECT * FROM offensive_stats_2015 WHERE player_position = (%s);", (position_search,))
                 position_search_row = cur.fetchall()
                 print('=' * 20)
-                print("Data for %s position group:" % (position_search.upper()))
+                print("\nData for %s position group:" % (position_search.upper()))
                 print('=' * 20)
                 for player in position_search_row:
-                    print("Player Name: " + "\t","\t","\t","\t","\t","\t","\t",player[0])
-                    print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player[1])
+                    print("Player Name: " + "\t","\t","\t","\t","\t","\t","\t",player[0].upper())
+                    print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player[1].upper())
                     print("Jersey number: " + "\t","\t","\t","\t","\t","\t","\t",str(player[2]))
                     print("Total Plays from Scrimmage: " + "\t","\t","\t",str(player[3]))
                     print("Total Yards from Scrimmage: " + "\t","\t","\t",str(player[4]))
@@ -68,6 +67,7 @@ while search:
             yards = input("\nHow many yards from scrimmage did {} have in 2015? ".format(name))
             ave = input("\nWhat was the average yards per play for {} in 2015? ".format(name))
             tds = input("\nHow many Touchdowns did {} score in 2015? ".format(name))
+            print("-" * 20)
             cur.execute("INSERT INTO offensive_stats_2015 VALUES (%s, %s, %s, %s, %s, %s, %s);",(name,position,jersey,plays,yards,ave,tds))
             conn.commit()
         else:
@@ -76,8 +76,8 @@ while search:
     keep_going = input("Would you like to search again? (Type 'y' or 'n')" )
     if keep_going == "y":
         continue
-
     else:
+        print("\nThank you for using Clemson Google. Goodbye! #GoTigers™ ")
         break
 
 cur.close()
