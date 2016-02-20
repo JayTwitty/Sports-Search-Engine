@@ -1,0 +1,16 @@
+wayne gallman,rb,9,304,1740,5.7,14
+deshaun watson,qb,4,207,1105,5.3,12
+zac brooks,rb,24,50,347,6.9,5
+c.j. fuller,rb,27,46,215,4.7,1
+kelly bryant,qb,2,23,156,6.8,2
+tyshon dye,rb,23,23,91,4.0,2
+c.j. davidson,rb,21,22,60,2.7,0
+ray-ray mccloud,wr,34,36,299,8.3,1
+artavis scott,wr,3,99,921,9.3,7
+nick schuessler,qb,12,6,-23,-3.8,0
+deon cain,wr,8,35,577,16.5,5
+charone peake,wr,19,50,716,14.3,5
+jordan leggett,te,16,40,525,13.1,8
+hunter renfrow,wr,13,33,492,14.9,5
+germone hopper,wr,5,21,317,15.1,1
+mike williams,wr,7,2,20,10,1

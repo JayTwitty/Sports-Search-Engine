@@ -27,7 +27,7 @@ conn.commit()
 
 insert_template = "INSERT INTO offensive_stats_2015 VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
-roster = [['wayne gallman','rb',9,304,1740,5.7,14],
+"""roster = [['wayne gallman','rb',9,304,1740,5.7,14],
           ['deshaun watson','qb',4,207,1105,5.3,12],
           ['zac brooks','rb',24,50,347,6.9,5],
           ['c.j. fuller','rb',27,46,215,4.7,1],
@@ -44,6 +44,13 @@ roster = [['wayne gallman','rb',9,304,1740,5.7,14],
           ['germone hopper','wr',5,21,317,15.1,1],
           ['mike williams','wr',7,2,20,10,1]
           ]
+          """
+def read_file():
+   with open("offensive_stats_2015.txt") as infile:
+       data = infile.readlines()
+   return [line.replace('\n','').split(",") for line in data]
+roster = read_file()
+print(roster)
 
 for player in roster:
     cur.execute(insert_template, player)
