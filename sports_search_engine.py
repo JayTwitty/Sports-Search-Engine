@@ -7,28 +7,33 @@ cur = conn.cursor()
 print("\nWelcome to the Clemson Google database for 2015 Offensive Football Stats.")
 search = True
 while search:
-    player_search = input("\nWhich offensive player would you like to search for? ")
-    cur.execute("select * from offensive_stats_2015 where player_name = (%s);",(player_search,))
-    player_search_row = cur.fetchone()
-    if player_search_row == None:
-        print("\nSorry, That player was not found")
-        print("=" * 20)
-    else:
-        print("\nPlayer Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0].upper())
-        print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player_search_row[1].upper())
-        print("Jersey number: " + "\t","\t","\t","\t","\t","\t","\t",str(player_search_row[2]))
-        print("Total Plays from Scrimmage: " + "\t","\t","\t",str(player_search_row[3]))
-        print("Total Yards from Scrimmage: " + "\t","\t","\t",str(player_search_row[4]))
-        print("Average Yards per play from Scrimmage: " + "\t",str(player_search_row[5]))
-        print("Total TDs from Scrimmage: " + "\t","\t","\t","\t",str(player_search_row[6]))
-        print("=" * 20)
+    player_check = "y"
+    while player_check == "y":
+        player_check = input("\nWould you like to search stats by player? (Type 'y' or 'n') ").lower()
+        if player_check == "y":
+            player_search = input("\nWhich offensive player would you like to search for? ").lower()
+            cur.execute("select * from offensive_stats_2015 where player_name = (%s);",(player_search,))
+            player_search_row = cur.fetchone()
+            if player_search_row == None:
+                print("\nSorry, That player was not found")
+                print("=" * 20)
+            else:
+                print("\nPlayer Name: " + "\t","\t","\t","\t","\t","\t","\t",player_search_row[0].upper())
+                print("Position: " + "\t","\t","\t","\t","\t","\t","\t","\t",player_search_row[1].upper())
+                print("Jersey number: " + "\t","\t","\t","\t","\t","\t","\t",str(player_search_row[2]))
+                print("Total Plays from Scrimmage: " + "\t","\t","\t",str(player_search_row[3]))
+                print("Total Yards from Scrimmage: " + "\t","\t","\t",str(player_search_row[4]))
+                print("Average Yards per play from Scrimmage: " + "\t",str(player_search_row[5]))
+                print("Total TDs from Scrimmage: " + "\t","\t","\t","\t",str(player_search_row[6]))
+                print("=" * 20)
+        else:
+            print("=" * 20)
+            break
     position_check = "y"
     while position_check == "y":
-        position_check = input("\nWould you like to search by position? (Type 'y' or 'n') ")
-        print('-' * 20)
-
+        position_check = input("\nWould you like to search by position? (Type 'y' or 'n') ").lower()
         if position_check == "y":
-            position_search = input("Which positions would you like to search for? (Type 'qb', 'rb', or 'wr') ")
+            position_search = input("\nWhich positions would you like to search for? (Type 'qb', 'rb', or 'wr') ").lower()
             if position_search in ["rb", "qb", "wr"]:
                 cur.execute("SELECT * FROM offensive_stats_2015 WHERE player_position = (%s);", (position_search,))
                 position_search_row = cur.fetchall()
@@ -47,11 +52,11 @@ while search:
             else:
                 print("Invalid entry")
         else:
+            print("=" * 20)
             continue
-
     insert_player = "y"
     while insert_player == "y":
-        insert_player = input("Would you like to insert new player data? (Type 'y' or 'n')")
+        insert_player = input("\nWould you like to insert new player data? (Type 'y' or 'n') ").lower()
         if insert_player == "y":
             insert_player_string = """player_name,
             player_position,
@@ -71,18 +76,22 @@ while search:
             try:
                 cur.execute("INSERT INTO offensive_stats_2015 VALUES (%s, %s, %s, %s, %s, %s, %s);",(name,position,jersey,plays,yards,ave,tds))
             except Exception:
+                print("Invalid entry\n")
                 pass
             conn.commit()
         else:
-            print("-" * 20)
+            print("=" * 20)
             continue
-    keep_going = input("Would you like to search again? (Type 'y' or 'n')" )
+    keep_going = input("\nWould you like to search again? (Type 'y' or 'n') " )
+    print("\n")
     if keep_going == "y":
         print("=" * 20)
         continue
     else:
-        print("\nThank you for using Clemson Google. Goodbye! #GoTigers™ ")
-        break
+        print("=" * 20)
+        print("Thank you for using Clemson Google. Goodbye! #GoTigers™ ")
+        print("=" * 20)
+        search = False
 
 cur.close()
 conn.close()
