@@ -4,10 +4,10 @@ import psycopg2
 conn = psycopg2.connect(user="tiger_twitty", database="clemson_google")
 cur = conn.cursor()
 
-print("\nWelcome to the Clemson Google database for 2015 Offensive Football Stats.\n")
+print("\nWelcome to the Clemson Google database for 2015 Offensive Football Stats.")
 search = True
 while search:
-    player_search = input("Which offensive player would you like to search for? ")
+    player_search = input("\nWhich offensive player would you like to search for? ")
     cur.execute("select * from offensive_stats_2015 where player_name = (%s);",(player_search,))
     player_search_row = cur.fetchone()
     if player_search_row == None:
@@ -68,13 +68,17 @@ while search:
             ave = input("\nWhat was the average yards per play for {} in 2015? ".format(name))
             tds = input("\nHow many Touchdowns did {} score in 2015? ".format(name))
             print("-" * 20)
-            cur.execute("INSERT INTO offensive_stats_2015 VALUES (%s, %s, %s, %s, %s, %s, %s);",(name,position,jersey,plays,yards,ave,tds))
+            try:
+                cur.execute("INSERT INTO offensive_stats_2015 VALUES (%s, %s, %s, %s, %s, %s, %s);",(name,position,jersey,plays,yards,ave,tds))
+            except Exception:
+                pass
             conn.commit()
         else:
             print("-" * 20)
             continue
     keep_going = input("Would you like to search again? (Type 'y' or 'n')" )
     if keep_going == "y":
+        print("=" * 20)
         continue
     else:
         print("\nThank you for using Clemson Google. Goodbye! #GoTigers™ ")
